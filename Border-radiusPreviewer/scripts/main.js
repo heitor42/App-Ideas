@@ -18,7 +18,19 @@ function getValues() {
     return values;
 }
 
+function showBorderValue(values) {
+    const previewer = document.getElementById('previewer')
+    previewer.innerHTML = null
+    previewer.innerText = `
+    border-top-left-radius: ${values.topLeftValue}px
+    border-top-right-radius: ${values.topRightValue}px
+    borader-bottom-left-radius: ${values.bottomLeftValue}px
+    borader-bottom-right-radius: ${values.bottomRightValue}px
+    `;
+
+}
 document.querySelector('body').onchange = () => {
     changerBorad(previewer, getValues())
+    showBorderValue(getValues())
 
 }
