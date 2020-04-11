@@ -1,0 +1,43 @@
+body {
+    color: #fff;
+    background-color: black;
+
+    font-family: 'Roboto', sans-serif;
+}
+
+table {
+    border: 1px solid rgba(115, 128, 126, 0.151);
+    margin: auto;
+}
+
+th {
+    height: 70px;
+    text-align: left;
+    font-size: 30px;
+    font-weight: 500;
+    color: rgba(245, 245, 245, 0.822);
+
+    background-color: #313330;
+
+    padding-left: 20px;
+}
+
+td {
+    height: 60px;
+    width: 60px;
+    text-align: center;
+
+    background-color: #333;
+    border: 1px;
+    
+    transition: filter 0.2s;
+}
+
+td:hover {
+    filter: brightness(90%)
+}
+
+.main-function-input {
+    color: #FF8F45;
+}
+
