@@ -17,7 +17,7 @@ mobile device to better understand basic functionality and edge cases.
 
 ## User Stories
 
--   [ ] User can see a display showing the current number entered or the
+-   [X] User can see a display showing the current number entered or the
 result of the last operation.
 -   [ ] User can see an entry pad containing buttons for the digits 0-9, 
 operations - '+', '-', '/', and '=', a 'C' button (for clear), and an 'AC'
@@ -41,7 +41,7 @@ to set the display to 0.
 
 -   [ ] User can click a '+/-' button to change the sign of the number that is
 currently displayed.
--   [ ] User can see a decimal point ('.') button on the entry pad to that 
+-   [X] User can see a decimal point ('.') button on the entry pad to that 
 allows floating point numbers up to 3 places to be entered and operations to
 be carried out to the maximum number of decimal places entered for any one
 number.
