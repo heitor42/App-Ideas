@@ -1,18 +1,12 @@
 let memory1 = '';
 let memory2 = '';
+let sign
+
 function Calculator() {
     const body = document.querySelector("body");
-    const operator = {
-        plus: (value1, value2) => value1 + value2,
-        minus: (valie1, value2) => valie1 - value2,
-        times: (value1, value2) => value1 * value2,
-        divded: (value1, value2) => value1 / value2,
-        percent: (value1) => value1 / 100,
-        AC: () => { },
-        C: () => { },
-    }
 
     body.addEventListener('keypress', fisicalKeyboard);
+    
     FunctionKeyboard();
     NumberKeyboard();
 };
@@ -21,9 +15,10 @@ function AddToMemory(value, memory) {
     if (memory1.length > 7) {
         return;
     }
+
     if (memory === 1) {
         if (value === '.') {
-            if (memory1.localeCompare) {
+            if (Number.isInteger(Number(memory1)) && memory1[memory1.length - 1] != '.') {
                 memory1 += value
             }
 
@@ -34,7 +29,7 @@ function AddToMemory(value, memory) {
             memory1 += value
         }
 
-        AddNumberOnDisplay(memory1)
+        AddOnDisplay(memory1)
     } else if (memory === 2) {
         memory2 = memory1;
 
@@ -43,10 +38,15 @@ function AddToMemory(value, memory) {
 }
 
 function fisicalKeyboard(e) {
-    AddToMemory(e.key);
+    const functionsKeyboard = document.querySelectorAll(".main-function-input");  
+
+    functionsKeyboard[0].innerHTML = 'C';
+
+    AddToMemory(e.key, 1);
+
 }
 
-function AddNumberOnDisplay(value) {
+function AddOnDisplay(value) {
     const display = document.querySelector("#display");
 
     if (!!value) {
@@ -56,8 +56,6 @@ function AddNumberOnDisplay(value) {
     }
 
 }
-
-
 
 function NumberKeyboard() {
     const numberKeyboard = document.querySelectorAll(".number-input");
@@ -104,7 +102,7 @@ function NumberKeyboard() {
     }
 
     numberKeyboard[10].onclick = () => {
-        AddToMemory('.')
+        AddToMemory('.', 1)
     }
 }
 
@@ -112,9 +110,19 @@ function FunctionKeyboard() {
     const functionsKeyboard = document.querySelectorAll(".main-function-input");    
     const table = document.querySelector("tbody");
 
+    const operator = {
+        plus: (value1, value2) => value1 + value2,
+        minus: (valie1, value2) => valie1 - value2,
+        times: (value1, value2) => value1 * value2,
+        divded: (value1, value2) => value1 / value2,
+        percent: (value1) => value1 / 100,
+        AC: () => { },
+        C: () => { },
+    }
+
     table.onclick = () => {
-        if (memory1 != '') {
-            functionsKeyboard[0].innerHTML = 'C'
+        if (memory1 !== '' && !sign) {
+            functionsKeyboard[0].innerHTML = 'C';
         }
     }
 
@@ -124,17 +132,56 @@ function FunctionKeyboard() {
             memory1 = '';
 
             functionsKeyboard[0].innerHTML = 'AC'
-            AddNumberOnDisplay(memory1)
+            AddOnDisplay(memory1)
         } else if (functionsKeyboard[0].innerHTML === 'AC') {
             memory1 = '';
             memory2 = '';
+            sign = null
 
-            functionsKeyboard[0].innerHTML = 'C'
-            // functionsKeyboard
+            functionsKeyboard[0].innerHTML = 'C';
 
-            AddNumberOnDisplay(memory1)
+            AddOnDisplay(memory1)
         }
     };
+
+    functionsKeyboard[1].onclick = () => {
+        AddOnDisplay(operator.percent(memory1))
+    }
+
+    functionsKeyboard[2].onclick = () => {
+        memory2 = memory1;
+        memory1 = '';
+        sign = 'divded'
+    }
+
+    functionsKeyboard[3].onclick = () => {
+        memory2 = memory1;
+        memory1 = '';
+        sign = 'times'
+    }
+
+    functionsKeyboard[4].onclick = () => {
+        memory2 = memory1;
+        memory1 = '';
+        sign = 'minus'
+    }
+
+    functionsKeyboard[5].onclick = () => {
+        memory2 = memory1;
+        memory1 = '';
+        sign = 'plus'
+    }
+
+    functionsKeyboard[6].onclick = () => {
+        functionsKeyboard[0].innerHTML = 'AC';
+        
+        const value1 = Number(memory2)
+        const value2 = Number(memory1)
+
+        memory2 = operator[sign](value1, value2);
+
+        AddOnDisplay(memory2);
+    }
 }
 
 
