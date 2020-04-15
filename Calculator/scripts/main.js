@@ -34,6 +34,9 @@ function AddToMemory(value, memory) {
         memory2 = memory1;
 
         memory1 = '';
+    } else if (memory === 3){
+        memory1 = value;
+        AddOnDisplay(value);
     }
 }
 
@@ -50,7 +53,7 @@ function AddOnDisplay(value) {
     const display = document.querySelector("#display");
 
     if (!!value) {
-        display.innerHTML = value;
+        display.innerHTML = Format(Number(value));
     } else {
         display.innerHTML = '0'
     }
@@ -59,7 +62,13 @@ function AddOnDisplay(value) {
 
 function NumberKeyboard() {
     const numberKeyboard = document.querySelectorAll(".number-input");
+    const plusMinus = document.querySelector("#inverse");
 
+    plusMinus.onclick = () => {
+        let inverse = Number(memory1) * -1
+        AddToMemory(inverse.toString(), 3)
+
+    }
 
     numberKeyboard[0].onclick = () => {
         AddToMemory(numberKeyboard[0].textContent, 1)
@@ -184,5 +193,15 @@ function FunctionKeyboard() {
     }
 }
 
+function Format(value) {
+    //ERR
+    if (!Number.isFinite(value) || value > 99999999 || (!Number.isInteger(value) && value > 99999)) {
+        return "ERR"
+    } else if (!Number.isInteger(value) && value < 99999) {
+        return parseFloat(value.toFixed(3))
+    } else {
+        return value
+    }
 
+}
 Calculator()
